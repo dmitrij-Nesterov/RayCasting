@@ -8,9 +8,10 @@ import math
 
 pg.init()
 sc = pg.display.set_mode((WIDTH, HEIGHT))
+sc_map = pg.Surface((WIDTH // MAP_SCALE, HEIGHT // MAP_SCALE))
 clock = pg.time.Clock()
 player = Player()
-drawing = Drawing(sc)
+drawing = Drawing(sc, sc_map)
 
 while True:
     for event in pg.event.get():
@@ -22,12 +23,8 @@ while True:
     drawing.background()
     drawing.world(player.pos, player.angle)
     drawing.fps(clock)
+    drawing.mini_map(player)
 
-    # pg.draw.circle(sc, GREEN, (int(player.x), int(player.y)), 12)
-    # pg.draw.line(sc, GREEN, (int(player.x), int(player.y)), (player.x + WIDTH * math.cos(player.angle),
-    #                                              player.y + HEIGHT * math.sin(player.angle)))
-    # for x, y in world_map:
-    #     pg.draw.rect(sc, DARKGRAY, (x, y, TILE, TILE), 2)
 
     pg.display.flip()
     clock.tick()

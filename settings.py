@@ -12,6 +12,7 @@ TILE = 85
 # minimap settings
 MAP_SCALE = 5
 MAP_TILE = TILE // MAP_SCALE
+MAP_POS = (0, 0)
 
 # ray casting settings
 FOV = math.pi / 3
@@ -33,6 +34,8 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (220, 0, 0)
 GREEN = (0, 220, 0)
+GREEN_BLACK = (18, 53, 36)
+ORANGE = (240, 120, 80)
 BLUE = (0, 0, 220)
 SKYBLUE = (0, 186, 255)
 DARKGRAY = (40, 40, 40)
