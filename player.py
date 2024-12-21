@@ -11,23 +11,27 @@ class Player:
     def pos(self):
         return self.x, self.y
 
-    def movement(self):
+    def movement(self, fps):
         keys = pg.key.get_pressed()
+        speed = player_speed / fps
+        delta_angle = player_delta_angle / fps
         cos_a = math.cos(self.angle)
         sin_a = math.sin(self.angle)
+        if keys[pg.K_LSHIFT]:
+            speed *= 2
         if keys[pg.K_w]:
-            self.x += player_speed * cos_a
-            self.y += player_speed * sin_a
+            self.x += speed * cos_a
+            self.y += speed * sin_a
         if keys[pg.K_s]:
-            self.x -= player_speed * cos_a
-            self.y -= player_speed * sin_a
+            self.x -= speed * cos_a
+            self.y -= speed * sin_a
         if keys[pg.K_a]:
-            self.x += player_speed * sin_a
-            self.y -= player_speed * cos_a
+            self.x += speed * sin_a
+            self.y -= speed * cos_a
         if keys[pg.K_d]:
-            self.x -= player_speed * sin_a
-            self.y += player_speed * cos_a
+            self.x -= speed * sin_a
+            self.y += speed * cos_a
         if keys[pg.K_LEFT]:
-            self.angle -= 0.02
+            self.angle -= delta_angle
         if keys[pg.K_RIGHT]:
-            self.angle += 0.02
+            self.angle += delta_angle

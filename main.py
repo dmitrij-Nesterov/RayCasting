@@ -14,17 +14,17 @@ player = Player()
 drawing = Drawing(sc, sc_map)
 
 while True:
+    fps = max(clock.get_fps(), 0.00001)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             exit()
-    player.movement()
+    player.movement(fps)
     sc.fill(BLACK)
 
     drawing.background()
     drawing.world(player.pos, player.angle)
-    drawing.fps(clock)
-    drawing.mini_map(player)
-
+    drawing.fps(fps)
+    # drawing.mini_map(player)
 
     pg.display.flip()
     clock.tick()

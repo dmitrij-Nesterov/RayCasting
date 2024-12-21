@@ -21,13 +21,19 @@ NUM_RAYS = 340
 MAX_DEPTH = 800
 DELTA_ANGLE = FOV / NUM_RAYS
 DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
-PROJ_COEFF = DIST * TILE
+PROJ_COEFF = DIST * TILE * 3
 SCALE = WIDTH // NUM_RAYS
+
+# texture settings (1020 x 1020)
+TEXTURE_WIDTH = 1020
+TEXTURE_HEIGHT = 1020
+TEXTURE_SCALE = TEXTURE_WIDTH // TILE
 
 # player settings
 player_pos = (HALF_WIDTH, HALF_HEIGHT)
 player_angle = 0
-player_speed = 2
+player_speed = 240 # in second
+player_delta_angle = 2.4 # in second
 
 # colors
 WHITE = (255, 255, 255)
