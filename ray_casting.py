@@ -6,7 +6,7 @@ from map import world_map
 def mapping(a, b):
     return (a // TILE) * TILE, (b // TILE) * TILE
 
-def ray_casting(sc, player_pos, player_angel, texture):
+def ray_casting(sc, player_pos, player_angel, textures):
     ox, oy = player_pos
     xm, ym = mapping(ox, oy)
     cur_angle = player_angel - HALF_FOV
@@ -19,7 +19,9 @@ def ray_casting(sc, player_pos, player_angel, texture):
         for i in range(0, 5*WIDTH, TILE):
             depth_v = (x - ox) / cos_a
             yv = oy + depth_v * sin_a
-            if mapping(x + dx, yv) in world_map:
+            tile_v = mapping(x + dx, yv)
+            if tile_v in world_map:
+                texture_v = world_map[tile_v]
                 break
             x += dx * TILE
 
@@ -28,18 +30,19 @@ def ray_casting(sc, player_pos, player_angel, texture):
         for i in range(0, 5*WIDTH, TILE):
             depth_h = (y - oy) / sin_a
             xh = ox + depth_h * cos_a
-            if mapping(xh, y + dy) in world_map:
+            tile_h = mapping(xh, y + dy)
+            if tile_h in world_map:
+                texture_h = world_map[tile_h]
                 break
             y += dy * TILE
 
         #projection
-        depth, offset = (depth_v, yv) if depth_v < depth_h else (depth_h, xh)
+        depth, offset, texture = (depth_v, yv, texture_v) if depth_v < depth_h else (depth_h, xh, texture_h)
         offset = int(offset) % TILE
         depth *= math.cos(player_angel - cur_angle)
-        depth = max(depth, 0.00001)
         proj_height = min(int(PROJ_COEFF / depth), 2 * HEIGHT)
 
-        wall_column = texture.subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE, TEXTURE_HEIGHT)
+        wall_column = textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE, TEXTURE_HEIGHT)
         wall_column = pg.transform.scale(wall_column, (SCALE, proj_height))
         sc.blit(wall_column, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
 

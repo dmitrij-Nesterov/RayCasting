@@ -12,19 +12,22 @@ sc_map = pg.Surface((WIDTH // MAP_SCALE, HEIGHT // MAP_SCALE))
 clock = pg.time.Clock()
 player = Player()
 drawing = Drawing(sc, sc_map)
+delta_start = 50
 
 while True:
     fps = max(clock.get_fps(), 0.00001)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             exit()
-    player.movement(fps)
-    sc.fill(BLACK)
 
-    drawing.background()
-    drawing.world(player.pos, player.angle)
-    drawing.fps(fps)
-    # drawing.mini_map(player)
+    if not delta_start:
+        drawing.background(player.angle)
+        drawing.world(player.pos, player.angle)
+        drawing.fps(fps)
+        player.movement(fps)
+        # drawing.mini_map(player)
+    else:
+        delta_start -= 1
 
     pg.display.flip()
     clock.tick()

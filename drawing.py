@@ -8,14 +8,16 @@ class Drawing:
         self.sc = sc
         self.sc_map = sc_map
         self.font = pg.font.SysFont('Arial', 36, bold=True)
-        self.texture = pg.image.load("img/1.png").convert()
+        self.textures = {'1' : pg.image.load("img/1.png").convert(),
+                         '2' : pg.image.load("img/2.png").convert(),
+                         '3' : pg.image.load("img/3.png").convert()}
 
-    def background(self):
+    def background(self, angle):
         pg.draw.rect(self.sc, SKYBLUE, (0, 0, WIDTH, HALF_HEIGHT))
         pg.draw.rect(self.sc, DARKGRAY, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
     def world(self, player_pos, player_angle):
-        ray_casting(self.sc, player_pos, player_angle, self.texture)
+        ray_casting(self.sc, player_pos, player_angle, self.textures)
 
     def fps(self, fps):
         display_fps = str(int(fps))
